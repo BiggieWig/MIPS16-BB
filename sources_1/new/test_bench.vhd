@@ -70,7 +70,9 @@ stimulus: process
         wait for 20 ns;
         options <= "111";  -- Set options to "111"
         wait for 20 ns;
-
+        
+        
+        --uut.cnt <= x"ffff";
         -- Press the button after reaching "111"
         btn <= '1';  -- Press the button
         wait for 20 ns;  -- Hold the button pressed
@@ -96,6 +98,7 @@ stimulus: process
         wait for 20 ns;
 
         -- Press the button again after reaching "111"
+        --uut.cnt <= x"ffff";
         btn <= '1';  -- Press the button
         wait for 20 ns;  -- Hold the button pressed
         btn <= '0';  -- Release the button

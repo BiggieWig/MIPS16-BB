@@ -15,7 +15,6 @@ architecture Behavioral of mpg is
     signal Q1, Q2, Q3 : STD_LOGIC := '0';
 begin
 
-    -- Counter process (runs on every clock cycle)
     process(CLK)
     begin
         if rising_edge(CLK) then
@@ -23,11 +22,10 @@ begin
         end if;
     end process;
 
-    -- Sampling BTN only when CNT = x"FFFF"
     process(CLK)
     begin
         if rising_edge(CLK) then
-            if CNT = x"000F" then
+            if CNT = x"FFFF" then
                 Q1 <= BTN;
             end if;
         end if;

@@ -97,6 +97,7 @@ signal MPG_out : std_logic := '0';
 signal IF_instruction : std_logic_vector(15 downto 0) := (others => '0');
 signal IF_nextAdr : std_logic_vector(15 downto 0):= (others =>'0');
 signal IF_JumpAdr : std_logic_vector(15 downto 0) := (others => '0');
+signal IF_PCSrc : std_logic := '0';
 
 -- EX
 signal EX_BranchAdr : std_logic_vector(15 downto 0) := (others => '0');
@@ -133,9 +134,10 @@ Counting:mpg port map(
 
 
 IF_JumpAdr <=  IF_nextAdr(15 downto 14) & IF_instruction(12 downto 0) & '0';
+IF_PCSrc <= MC_Branch and EX_Zero;
 Instruction_Fetch:info_fetch port map(
         Jump =>MC_Jump,
-        PCSrc =>MC_Branch and EX_Zero,
+        PCSrc =>IF_PCSrc,
         JumpAdr =>IF_JumpAdr,
         BranchAdr=>EX_BranchAdr,
         nextAdr=> IF_nextAdr,
@@ -203,7 +205,7 @@ SSD:HEX_TO_7SEG port map(
             cat => cat1,
             an => an1
 );
---LEDS
+
 leds <= (MC_RegDst & MC_ExtOp & MC_ALUSrc & MC_Branch & MC_Jump & MC_MemWrite & MC_MemtoReg & MC_RegWrite) when options(0) = '0' else
         ("00000" & MC_ALUOp);
 
